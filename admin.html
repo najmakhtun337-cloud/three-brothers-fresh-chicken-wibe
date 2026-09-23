@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Three Brothers Fresh Chicken - Admin</title>
+
+<style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif
+}
+
+body{
+background:#06100a;
+color:white;
+min-height:100vh
+}
+
+.login{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:
+radial-gradient(circle at top,#174c2b,#06100a 55%,#020603)
+}
+
+.login-box{
+width:100%;
+max-width:420px;
+padding:32px;
+border-radius:28px;
+background:#0b1a10;
+border:1px solid #24412e;
+box-shadow:0 30px 90px #000
+}
+
+.logo{
+width:75px;
+height:75px;
+margin:auto auto 20px;
+border-radius:23px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+background:linear-gradient(135deg,#23ed7b,#0a9745)
+}
+
+h1{
+text-align:center
+}
+
+.sub{
+text-align:center;
+color:#8da395;
+margin:8px 0 25px
+}
+
+label{
+display:block;
+margin:15px 0 7px;
+color:#b9c9bf
+}
+
+input{
+width:100%;
+padding:14px;
+border-radius:13px;
+border:1px solid #294332;
+background:#07130b;
+color:white;
+outline:none
+}
+
+input:focus{
+border-color:#21e976
+}
+
+button{
+cursor:pointer
+}
+
+.login-btn{
+width:100%;
+margin-top:20px;
+padding:15px;
+border:0;
+border-radius:14px;
+font-weight:bold;
+background:linear-gradient(135deg,#22ed78,#0b9d48)
+}
+
+.error{
+color:#ff7474;
+text-align:center;
+margin-top:14px;
+font-size:14px
+}
+
+.dashboard{
+display:none
+}
+
+.header{
+position:sticky;
+top:0;
+z-index:5;
+padding:16px;
+background:#07130b;
+border-bottom:1px solid #203627
+}
+
+.header-inner{
+max-width:1100px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between
+}
+
+.brand{
+font-weight:bold
+}
+
+.brand small{
+display:block;
+font-size:10px;
+color:#769080;
+margin-top:4px
+}
+
+.logout{
+background:#101f15;
+border:1px solid #314936;
+color:white;
+padding:10px 15px;
+border-radius:12px
+}
+
+.container{
+width:min(1100px,92%);
+margin:30px auto 60px
+}
+
+.welcome h2{
+font-size:28px
+}
+
+.welcome p{
+color:#829589;
+margin-top:7px
+}
+
+.title{
+margin:32px 0 15px
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:16px
+}
+
+.card{
+padding:20px;
+border-radius:22px;
+border:1px solid #203b29;
+background:linear-gradient(145deg,#0d1d13,#08120c)
+}
+
+.card h3{
+margin-bottom:5px
+}
+
+.id{
+font-size:10px;
+color:#6e8576;
+margin-bottom:17px
+}
+
+.price-row{
+display:flex;
+gap:10px
+}
+
+.save{
+padding:13px 17px;
+border:0;
+border-radius:12px;
+background:#20e875;
+font-weight:bold
+}
+
+.switch{
+display:flex;
+gap:10px;
+align-items:center;
+margin-top:15px;
+color:#a5b6aa
+}
+
+.switch input{
+width:20px;
+height:20px;
+accent-color:#20e875
+}
+
+.settings{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:16px
+}
+
+.setting{
+padding:20px;
+border-radius:22px;
+background:#0b1910;
+border:1px solid #203b29
+}
+
+.setting input{
+margin-top:10px
+}
+
+.full{
+grid-column:1/-1
+}
+
+.save-settings{
+width:100%;
+margin-top:18px;
+padding:15px;
+border:0;
+border-radius:14px;
+font-weight:bold;
+background:linear-gradient(135deg,#20e875,#0b9d49)
+}
+
+.status{
+margin-top:20px;
+padding:14px;
+text-align:center;
+border-radius:14px;
+background:#0b1d12;
+color:#a6b8ac
+}
+
+@media(max-width:700px){
+.products,
+.settings{
+grid-template-columns:1fr
+}
+
+.price-row{
+flex-direction:column
+}
+
+.save{
+width:100%
+}
+
+.full{
+grid-column:auto
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="login" id="loginPage">
+
+<div class="login-box">
+
+<div class="logo">🍗</div>
+
+<h1>Private Admin</h1>
+
+<div class="sub">
+Three Brothers Fresh Chicken
+</div>
+
+<form id="loginForm">
+
+<label>Username</label>
+
+<input
+id="username"
+value="TBC1214"
+autocomplete="username"
+required
+>
+
+<label>Password</label>
+
+<input
+id="password"
+type="password"
+placeholder="Admin password"
+autocomplete="current-password"
+required
+>
+
+<button class="login-btn">
+🔐 Secure Login
+</button>
+
+<div class="error" id="loginError"></div>
+
+</form>
+
+</div>
+</div>
+
+
+<div class="dashboard" id="dashboard">
+
+<header class="header">
+
+<div class="header-inner">
+
+<div class="brand">
+🍗 Three Brothers Fresh Chicken
+<small>PRIVATE ADMIN PANEL</small>
+</div>
+
+<button class="logout" onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+<div class="welcome">
+
+<h2>Dashboard 👋</h2>
+
+<p>
+Manage products, prices, delivery and shop timing.
+</p>
+
+</div>
+
+
+<h2 class="title">
+🍗 Product Prices
+</h2>
+
+<div class="products" id="products">
+Loading...
+</div>
+
+
+<h2 class="title">
+⚙️ Shop Settings
+</h2>
+
+<div class="settings">
+
+<div class="setting">
+<strong>🚚 Naruli Bazar Delivery</strong>
+<input id="deliveryNaruli" type="number" min="0">
+</div>
+
+<div class="setting">
+<strong>🚚 Other Area Delivery</strong>
+<input id="deliveryOther" type="number" min="0">
+</div>
+
+<div class="setting">
+<strong>🕐 Opening Time</strong>
+<input id="openingTime" type="time">
+</div>
+
+<div class="setting">
+<strong>🕙 Closing Time</strong>
+<input id="closingTime" type="time">
+</div>
+
+<div class="setting full">
+
+<div class="switch">
+<input id="shopOpen" type="checkbox">
+<span>🟢 Shop is Open</span>
+</div>
+
+<button
+class="save-settings"
+onclick="saveSettings()"
+>
+💾 Save Shop Settings
+</button>
+
+</div>
+
+</div>
+
+
+<div class="status" id="status">
+Ready
+</div>
+
+</main>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+/* ================================
+SUPABASE CONFIG
+================================ */
+
+const SUPABASE_URL =
+"https://pmrullfxbljxbdcjjnry.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"sb_publishable__WkZ7NNcdR59x-MH8k_Eiw_01Yuh-iZ";
+
+
+const sb =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
+);
+
+
+/* ================================
+ADMIN LOGIN
+================================ */
+
+const ADMIN_USERNAME="TBC1214";
+
+/*
+এখানে Supabase-এ যে email দিয়ে
+user তৈরি করেছো সেই email বসাবে।
+*/
+
+const ADMIN_EMAIL=
+"raihanallom9@gmail.com";
+
+
+const loginPage=
+document.getElementById("loginPage");
+
+const dashboard=
+document.getElementById("dashboard");
+
+
+document
+.getElementById("loginForm")
+.addEventListener("submit",async(e)=>{
+
+e.preventDefault();
+
+const username=
+document.getElementById("username").value.trim();
+
+const password=
+document.getElementById("password").value;
+
+const error=
+document.getElementById("loginError");
+
+error.textContent="";
+
+
+if(username!==ADMIN_USERNAME){
+
+error.textContent="Invalid username.";
+
+return;
+
+}
+
+
+const {data,error:loginError}=
+await sb.auth.signInWithPassword({
+
+email:ADMIN_EMAIL,
+
+password:password
+
+});
+
+
+if(loginError){
+
+error.textContent=
+"Login failed.";
+
+return;
+
+}
+
+
+const {data:admin}=
+await sb
+.from("admins")
+.select("user_id")
+.eq("user_id",data.user.id)
+.maybeSingle();
+
+
+if(!admin){
+
+await sb.auth.signOut();
+
+error.textContent=
+"Not authorized as admin.";
+
+return;
+
+}
+
+
+loginPage.style.display="none";
+
+dashboard.style.display="block";
+
+loadAll();
+
+});
+
+
+/* ================================
+LOAD ALL
+================================ */
+
+async function loadAll(){
+
+await loadProducts();
+
+await loadSettings();
+
+}
+
+
+/* ================================
+PRODUCTS
+================================ */
+
+async function loadProducts(){
+
+const box=
+document.getElementById("products");
+
+const {data,error}=
+await sb
+.from("products")
+.select("*")
+.order("sort_order");
+
+
+if(error){
+
+box.innerHTML="Could not load products.";
+
+return;
+
+}
+
+
+box.innerHTML="";
+
+
+data.forEach(p=>{
+
+const card=
+document.createElement("div");
+
+card.className="card";
+
+card.innerHTML=`
+
+<h3>${escapeHtml(p.name)}</h3>
+
+<div class="id">
+${escapeHtml(p.id)}
+</div>
+
+<div class="price-row">
+
+<input
+id="price-${p.id}"
+type="number"
+min="0"
+step="1"
+value="${p.price}"
+>
+
+<button
+class="save"
+onclick="saveProduct('${p.id}')"
+>
+Save
+</button>
+
+</div>
+
+<div class="switch">
+
+<input
+id="active-${p.id}"
+type="checkbox"
+${p.active?"checked":""}
+>
+
+<span>Product Available</span>
+
+</div>
+`;
+
+box.appendChild(card);
+
+});
+
+}
+
+
+/* ================================
+SAVE PRODUCT
+================================ */
+
+async function saveProduct(id){
+
+const price=
+Number(
+document.getElementById(
+"price-"+id
+).value
+);
+
+const active=
+document.getElementById(
+"active-"+id
+).checked;
+
+
+const {error}=
+await sb
+.from("products")
+.update({
+price,
+active
+})
+.eq("id",id);
+
+
+if(error){
+
+showStatus("❌ Price update failed.");
+
+return;
+
+}
+
+
+showStatus(
+"✅ Price updated successfully."
+);
+
+}
+
+
+/* ================================
+SETTINGS
+================================ */
+
+async function loadSettings(){
+
+const {data,error}=
+await sb
+.from("settings")
+.select("*");
+
+
+if(error)return;
+
+
+const s={};
+
+data.forEach(x=>{
+s[x.key]=x.value;
+});
+
+
+document.getElementById("deliveryNaruli").value=
+s.delivery_naruli ?? 30;
+
+document.getElementById("deliveryOther").value=
+s.delivery_other ?? 50;
+
+document.getElementById("openingTime").value=
+s.opening_time ?? "08:00";
+
+document.getElementById("closingTime").value=
+s.closing_time ?? "22:00";
+
+document.getElementById("shopOpen").checked=
+s.shop_open !== false;
+
+}
+
+
+/* ================================
+SAVE SETTINGS
+================================ */
+
+async function saveSettings(){
+
+const values=[
+
+["delivery_naruli",
+Number(document.getElementById("deliveryNaruli").value)],
+
+["delivery_other",
+Number(document.getElementById("deliveryOther").value)],
+
+["opening_time",
+document.getElementById("openingTime").value],
+
+["closing_time",
+document.getElementById("closingTime").value],
+
+["shop_open",
+document.getElementById("shopOpen").checked]
+
+];
+
+
+for(const [key,value] of values){
+
+const {error}=
+await sb
+.from("settings")
+.update({value})
+.eq("key",key);
+
+if(error){
+
+showStatus("❌ Settings update failed.");
+
+return;
+
+}
+
+}
+
+
+showStatus(
+"✅ Shop settings saved."
+);
+
+}
+
+
+/* ================================
+LOGOUT
+================================ */
+
+async function logout(){
+
+await sb.auth.signOut();
+
+dashboard.style.display="none";
+
+loginPage.style.display="flex";
+
+document.getElementById("password").value="";
+
+}
+
+
+/* ================================
+STATUS
+================================ */
+
+function showStatus(text){
+
+const box=
+document.getElementById("status");
+
+box.textContent=text;
+
+setTimeout(()=>{
+box.textContent="Ready";
+},4000);
+
+}
+
+
+/* ================================
+ESCAPE
+================================ */
+
+function escapeHtml(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+</script>
+
+</body>
+  </html>
